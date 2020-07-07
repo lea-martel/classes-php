@@ -35,18 +35,30 @@ public function connect($login, $password) {
 if(!isset($this->mysql)) {
         $requete = $this->query ("SELECT * FROM utilisateurs WHERE login = $login AND password = $password");
         $query1 = mysqli_fetch_assoc($requete);
-    }
+    
+}
+
+
+
+$this->id = "$query1[0]";
+$this->login = "$query1[1]";
+$this->password = "$query1[2]";
+$this->email = "$query1[3]";
+$this->firstname = "$query1[4]";
+$this->lastname = "$query1[5]";
+
 }
 
 public function disconnect()
-    {
+{
         session_destroy();
 
         echo 'Vous avez été déconnecté';
         
 }
 
-public function delete() {
+public function delete() 
+{
 
     $mysql = mysqli_connect('localhost', 'root','',"classes");
     $requete1 = "DELETE FROM `utilisateur` WHERE id = '$_SESSION[id]' ";
@@ -77,11 +89,11 @@ public function isConnected() {
     
     if(isset($_SESSION['id'])){
         echo 'Vous êtes connecté';
-        return TRUE;
+        return True;
 
     }else
      echo 'Vous êtes deconnecté'; 
-     return FALSE;
+     return False;
      
 }
 
@@ -124,14 +136,28 @@ public function getLastname() {
 
 public function refresh() { 
 
+    $mysql = mysqli_connect('localhost', 'root','',"classes");
+    $requete5 = "SELECT * FROM utilisateurs WHERE `id`='$_SESSION[id]'";
+    $query5 = mysqli_query($mysql,$requete5);
+    $result2 = mysqli_fetch_assoc($query5);
     
+$this->id = "$result2[0]";
+$this->login = "$result2[1]";
+$this->password = "$result2[2]";
+$this->email = "$result2[3]";
+$this->firstname = "$result2[4]";
+$this->lastname = "$result2[5]";
 }
 }
+
 $user = new user;
 // $user->__construct();
 $user = $user->register('Lea','lea','lea.martel@laplateforme.io','Lea','Martel');
 echo $user[0];
 // $user->connect("Lea","lea");
+// $user->disconnect();
+// $user->delete();
+// $user->update('Lea','lea','lea.martel@laplateforme.io','Lea','Martel');
 ?>
 
 <!DOCTYPE html>
