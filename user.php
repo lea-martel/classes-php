@@ -60,9 +60,71 @@ public function delete() {
 
 public function update($login, $password, $email, $firstname, $lastname) {
 
+    $mysql = mysqli_connect('localhost', 'root','',"classes");
     $requete2 = "UPDATE utilisateurs SET `login`='$login',`password`='$password',`email`='$email',`firstname`='$firstname',`lastname`='$lastname' WHERE `id` = '".$_SESSION['id']."'";
-    $query3 = mysqli_connect($mysql,$requete2);
+    $requete3 = "SELECT * FROM utilisateurs WHERE  `id`='$_SESSION[id]'";
+    $query3 = mysqli_query($mysql,$requete2);
+    $result = mysqli_fetch_assoc($query3);
 
+    if((isset($login)) && (isset($password)) && (isset($email)) && (isset($firstname)) && (isset($lastname))) {
+        
+    }
+}
+
+public function isConnected() {
+
+    $mysql = mysqli_connect('localhost', 'root','',"classes");
+    
+    if(isset($_SESSION['id'])){
+        echo 'Vous êtes connecté';
+        return TRUE;
+
+    }else
+     echo 'Vous êtes deconnecté'; 
+     return FALSE;
+     
+}
+
+public function getAllInfos() {
+
+    $mysql = mysqli_connect('localhost', 'root','',"classes");
+    $requete4 = "SELECT * FROM utilisateurs WHERE `id`='$_SESSION[id]'";
+    $query4 = mysqli_query($mysql,$requete4);
+    $result1 = mysqli_fetch_assoc($query4);
+    
+    return 
+        $this->login;
+        $this->password;
+        $this->email;
+        $this->firstname;
+        $this->lastname;
+
+}
+
+
+public function getLogin(){
+
+    return $this->login;
+}
+
+public function getEmail() {
+
+    return $this->email;
+}
+
+public function getFirstname() {
+
+    return $this->firstname;
+}
+
+public function getLastname() {
+
+    return $this->lastname;
+}
+
+public function refresh() { 
+
+    
 }
 }
 $user = new user;
